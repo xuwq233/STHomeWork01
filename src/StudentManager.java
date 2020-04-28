@@ -1,11 +1,14 @@
 import java.io.*;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class StudentManager {
 
-    //文件路径
+
+    //txt文件路径
     static String root = System.getProperty("user.dir");
     static String fileName="student.txt";
     static String textName = root+File.separator+fileName;
@@ -44,6 +47,67 @@ public class StudentManager {
     }
 
 
+    //插入
+    public static void insertStudent(ArrayList<Student> student) throws IOException {
+
+        if(student.size()>=20){
+            System.out.println("已经有20名学生，无法继续添加！");
+            return;
+        }
+
+        Reader(student);
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入学生学号：");
+        int id = Integer.valueOf(scanner.nextLine());
+        int index = -1;
+        for (int i = 0; i < student.size(); i++) {
+            Student stu = student.get(i);
+            if (stu.getId() == id){
+                index = i;
+                break;
+            }
+        }
+        if(index != -1)
+        {
+            System.out.println("该学生已存在！");
+            return;
+        }
+        System.out.println("请输入学生姓名：");
+        String name = scanner.nextLine();
+        System.out.println("请输入学生生日：");
+        String birDate = scanner.nextLine();
+        System.out.println("请输入学生性别：");
+        String gender = scanner.nextLine();
+        Student s = new Student();
+        s.setId(id);
+        s.setName(name);
+        s.setBirDate(birDate);
+        s.setGender(gender);
+        student.add(s);
+        Collections.sort(student, new Comparator<Student>(){
+            /*
+             * 返回一个基本类型的整型，
+             * 返回负数表示：s1 小于s2，
+             * 返回0 表示：s1和s2相等，
+             * 返回正数表示：s1大于s2
+             */
+            public int compare(Student s1, Student s2) {
+                //按照学号进行升序排列
+                if(s1.getId() > s2.getId()){
+                    return 1;
+                }
+                if(s1.getId() == s2.getId()){
+                    return 0;
+                }
+                return -1;
+            }
+        });
+        Writer(student);
+        System.out.println("新增学生成功！");
+    }
+
+
     //遍历
     public static void ListStudent(ArrayList<Student> student) throws IOException {
         Reader(student);
@@ -58,38 +122,18 @@ public class StudentManager {
 
     }
 
-    //插入
-    public static void insertStudent(ArrayList<Student> student) throws IOException {
-        Reader(student);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("请输入学生学号：");
-        int id = Integer.valueOf(scanner.nextLine());
-        System.out.println("请输入学生姓名：");
-        String name = scanner.nextLine();
-        System.out.println("请输入学生生日：");
-        String birDate = scanner.nextLine();
-        System.out.println("请输入学生性别：");
-        String gender = scanner.nextLine();
-        Student s = new Student();
-        s.setId(id);
-        s.setName(name);
-        s.setBirDate(birDate);
-        s.setGender(gender);
-        student.add(s);
-        Writer(student);
-        System.out.println("新增学生成功！");
-    }
 
-    //根据学生学号删除学生信息
+
+    //根据学生姓名删除学生信息
     public static void deleteStudent(ArrayList<Student> student) throws IOException{
         Reader(student);
-        System.out.println("请输入您要删除的学生学号：");
+        System.out.println("请输入您要删除的学生姓名：");
         Scanner scanner = new Scanner(System.in);
-        int scannerId = scanner.nextInt();
+        String scannerName = scanner.next();
         int index = -1;
         for (int i = 0; i < student.size(); i++) {
             Student s = student.get(i);
-            if (s.getId() == scannerId){
+            if (s.getName().equals(scannerName)){
                 index = i;
                 break;
             }
@@ -99,20 +143,20 @@ public class StudentManager {
             Writer(student);
             System.out.println("删除学生信息成功！");
         }else {
-            System.out.println("您输入的学生学号不存在！");
+            System.out.println("该学生不存在！");
         }
     }
 
     //修改学生信息
     public static void updateStudent(ArrayList<Student> student) throws  IOException{
         Reader(student);
-        System.out.println("请输入您要修改的学生学号：");
+        System.out.println("请输入您要修改的学生姓名：");
         Scanner scanner = new Scanner(System.in);
         int index = -1;
-        int upId = Integer.valueOf(scanner.nextLine());
+        String scannerName = scanner.nextLine();
         for (int i = 0; i < student.size(); i++) {
             Student s = student.get(i);
-            if (upId == s.getId()){
+            if (s.getName().equals(scannerName)){
                 index = i;
                 break;
             }
@@ -141,16 +185,16 @@ public class StudentManager {
         }
     }
 
-    //根据学生学号查找学生信息
+    //根据学生姓名查找学生信息
     public static void findStudent(ArrayList<Student> student) throws IOException{
         Reader(student);
-        System.out.println("请输入您要查找的学生学号：");
+        System.out.println("请输入您要查找的学生姓名：");
         Scanner scanner = new Scanner(System.in);
         int index = -1;
-        int upId = scanner.nextInt();
+        String scannerName = scanner.next();
         for (int i = 0; i < student.size(); i++) {
             Student s = student.get(i);
-            if (upId == s.getId()){
+            if (s.getName().equals(scannerName)){
                 index = i;
                 break;
             }

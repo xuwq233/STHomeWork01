@@ -1,13 +1,13 @@
 public class Student {
 
     //学生学号
-    public int id;
+    private int id;
     //学生姓名
-    public String name;
+    private String name;
     //学生生日
-    public String birDate;
+    private String birDate;
     //学生性别
-    public String gender;
+    private String gender;
 
 
     public int getId() {
