@@ -42,6 +42,7 @@ public class Student {
         this.gender = gender;
     }
 
+    //格式
     @Override
     public String toString() {
         return "Student{" +

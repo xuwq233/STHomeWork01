@@ -4,9 +4,7 @@ import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class StudentManager {
-
 
     //txt文件路径
     static String root = System.getProperty("user.dir");
@@ -17,7 +15,22 @@ public class StudentManager {
     //读文件
     public static void Reader(ArrayList<Student> student) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(textName));
-        String ch;
+        /*
+        *53
+        * String ch;
+        *while((ch=bufferedReader.readLine())!=null){
+        *    String[] studentData=ch.split(",");
+        *    Student s = new Student();
+        *    s.setId(Integer.parseInt(studentData[0]));
+        *    s.setName(studentData[1]);
+        *    s.setBirDate(studentData[2]);
+        *    s.setGender(studentData[3]);
+        *    student.add(s);
+        *}
+        *bufferedReader.close();
+        */
+        try{
+            String ch;
         while((ch=bufferedReader.readLine())!=null){
             String[] studentData=ch.split(",");
             Student s = new Student();
@@ -28,22 +41,40 @@ public class StudentManager {
             student.add(s);
         }
         bufferedReader.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
     //写文件
     public static void Writer(ArrayList<Student> student) throws IOException{
         BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(textName));
-        for(int i=0;i<student.size();i++) {
-            Student s1=student.get(i);
-            StringBuilder stringBuilder=new StringBuilder();
-            stringBuilder.append(s1.getId()).append(",").append(s1.getName()).append(",").append(s1.getBirDate()).append(",").append(s1.getGender());
-            bufferedWriter.write(stringBuilder.toString());
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
+        /*
+        *53
+        *for(int i=0;i<student.size();i++) {
+        *    Student s1=student.get(i);
+        *    StringBuilder stringBuilder=new StringBuilder();
+        *    stringBuilder.append(s1.getId()).append(",").append(s1.getName()).append(",").append(s1.getBirDate()).append(",").append(s1.getGender());
+        *    bufferedWriter.write(stringBuilder.toString());
+        *    bufferedWriter.newLine();
+        *    bufferedWriter.flush();
+        *}
+        *bufferedWriter.close();
+        */
+        try{
+            for(int i=0;i<student.size();i++) {
+                Student s1=student.get(i);
+                StringBuilder stringBuilder=new StringBuilder();
+                stringBuilder.append(s1.getId()).append(",").append(s1.getName()).append(",").append(s1.getBirDate()).append(",").append(s1.getGender());
+                bufferedWriter.write(stringBuilder.toString());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+            bufferedWriter.close();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        bufferedWriter.close();
-
     }
 
 
@@ -68,8 +99,7 @@ public class StudentManager {
                 break;
             }
         }
-        if(index != -1)
-        {
+        if(index != -1) {
             System.out.println("该学生已存在！");
             return;
         }
@@ -112,14 +142,17 @@ public class StudentManager {
     public static void ListStudent(ArrayList<Student> student) throws IOException {
         Reader(student);
         if(student.size()==0)
+            //System.out.println("对不起，没有学生信息");
+            //20
+        {
             System.out.println("对不起，没有学生信息");
+        }
         else{
             for(int i=0;i<student.size();i++) {
                 Student s=student.get(i);
                 System.out.println("学号："+s.getId()+"  姓名："+s.getName()+"  生日："+s.getBirDate()+"  性别："+s.getGender());
             }
-        }
-
+        }//6 else end
     }
 
 
@@ -144,7 +177,7 @@ public class StudentManager {
             System.out.println("删除学生信息成功！");
         }else {
             System.out.println("该学生不存在！");
-        }
+        }//39 if-else匹配
     }
 
     //修改学生信息
@@ -182,7 +215,7 @@ public class StudentManager {
             System.out.println("修改学生信息成功！");
             Writer(student);
 
-        }
+        }//6 else end
     }
 
     //根据学生姓名查找学生信息

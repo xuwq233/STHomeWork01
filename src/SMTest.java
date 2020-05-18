@@ -1,20 +1,18 @@
+/**
+ * @Author: Xuwq
+ * @Description:homework01
+ * @Date: 2020/5/18
+ **/
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-/**
- * @Author: Xuwq
- * @Description:
- * @Date: 2020/4/28
- **/
-
 
 public class SMTest {
     public static void main(String[] args) throws IOException {
 
         StudentManager studentManager = new StudentManager();
         ArrayList<Student> student=new ArrayList<Student>();
-
 
         while(true){
             System.out.println("请选择操作：");
@@ -57,6 +55,6 @@ public class SMTest {
                 default:
                     System.out.println("无效输入！请输入1~6");
             }
-        }
-    }
-}
+        }//6  while end
+    }// 6  IOException end
+}//6  SMTest end
